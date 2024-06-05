@@ -10,6 +10,7 @@ function* toIterable(quads: Quad[]) {
 describe('serialize from', () => {
   let quads: Quad[];
   let turtle: string;
+  let turtlePrefixed: string;
 
   beforeEach(() => {
     quads = [
@@ -17,6 +18,7 @@ describe('serialize from', () => {
       quad(namedNode('http://example.org/subject'), namedNode('http://example.org/predicate'), literal('object')),
     ];
     turtle = '<http://example.org/subject> <http://example.org/predicate> <http://example.org/object>, "object".\n';
+    turtlePrefixed = '@prefix ex: <http://example.org/>.\n\nex:subject ex:predicate ex:object, "object".\n';
   });
 
   it('emtpy list to turtle', async () => {
@@ -41,5 +43,13 @@ describe('serialize from', () => {
 
   it('non-emtpy iterable to turtle', async () => {
     await expect(serialize(toIterable(quads), { contentType: 'text/turtle' })).resolves.toEqual(turtle);
+  });
+
+  it('non-emtpy iterable to turtle with prefix', async () => {
+    await expect(serialize(toIterable(quads), { contentType: 'text/turtle', prefixes: { ex: 'http://example.org/' } })).resolves.toEqual(turtlePrefixed);
+  });
+
+  it('non-emtpy iterable to turtle with prefix', async () => {
+    await expect(serialize(toIterable(quads), { contentType: 'text/turtle', prefixes: { ex: 'http://example.org/', [Symbol('test')]: 'boo' } })).resolves.toEqual(turtlePrefixed);
   });
 });

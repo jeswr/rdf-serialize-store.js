@@ -23,6 +23,10 @@ const quads = [
 // <http://example.org/subject> <http://example.org/predicate> <http://example.org/object>, "object".
 await serialize(quads, { contentType: 'text/turtle' });
 await serialize(new Store(quads), { contentType: 'text/turtle' });
+
+// @prefix ex: <http://example.org/> .
+// ex:subject ex:predicate ex:object, "object".
+await serialize(quads, { contentType: 'text/turtle', prefixes: { ex: "http://example.org/" } });
 ```
 
 ## License
