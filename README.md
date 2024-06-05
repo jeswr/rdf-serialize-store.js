@@ -12,6 +12,7 @@ Serialise data from any iterable set of quads.
 
 ```ts
 import { Quad, Store, DataFactory } from 'n3';
+import serialize from '@jeswr/rdf-serialize-store';
 const { namedNode, literal, quad } = DataFactory;
 
 const quads = [
