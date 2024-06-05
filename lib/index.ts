@@ -5,9 +5,20 @@ import { Quad } from '@rdfjs/types';
 
 export function serializeToStream(
   quads: Iterable<Quad>,
-  options: Parameters<typeof rdfSerialize.serialize>[1],
+  options: Parameters<typeof rdfSerialize.serialize>[1] & { prefixes?: Record<string, string> },
 ) {
-  return rdfSerialize.serialize(wrap(quads, { autoStart: false }), options);
+  const prefixes = options.prefixes ?? {};
+  const stream = wrap(quads, { autoStart: false });
+
+  const { read } = stream;
+  stream.read = () => {
+    for (const pref in prefixes) {
+      if (typeof pref === 'string') stream.emit('prefix', pref, prefixes[pref]);
+    }
+    stream.read = read;
+    return stream.read();
+  };
+  return rdfSerialize.serialize(stream, options);
 }
 
 export default function serialize(...args: Parameters<typeof serializeToStream>) {
