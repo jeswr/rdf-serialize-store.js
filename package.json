@@ -89,7 +89,7 @@
   "dependencies": {
     "@rdfjs/types": "^1.1.0",
     "asynciterator": "^3.9.0",
-    "rdf-serialize": "^2.2.3",
+    "rdf-serialize": "^3.0.0",
     "stream-to-string": "^1.2.1"
   }
 }
