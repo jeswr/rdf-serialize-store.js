@@ -49,7 +49,7 @@ describe('serialize from', () => {
     await expect(serialize(toIterable(quads), { contentType: 'text/turtle', prefixes: { ex: 'http://example.org/' } })).resolves.toEqual(turtlePrefixed);
   });
 
-  it('non-emtpy iterable to turtle with prefix', async () => {
+  it('non-emtpy iterable to turtle with prefix and added symbol', async () => {
     await expect(serialize(toIterable(quads), { contentType: 'text/turtle', prefixes: { ex: 'http://example.org/', [Symbol('test')]: 'boo' } })).resolves.toEqual(turtlePrefixed);
   });
 });
