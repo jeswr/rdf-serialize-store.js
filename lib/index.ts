@@ -1,11 +1,11 @@
-import rdfSerialize from 'rdf-serialize';
+import { rdfSerializer } from 'rdf-serialize';
 import { wrap } from 'asynciterator';
-import stringify from 'stream-to-string';
-import { Quad } from '@rdfjs/types';
+import stringify from '@jeswr/stream-to-string';
+import type { Quad } from '@rdfjs/types';
 
 export function serializeToStream(
   quads: Iterable<Quad>,
-  options: Parameters<typeof rdfSerialize.serialize>[1] & { prefixes?: Record<string, string> },
+  options: Parameters<typeof rdfSerializer.serialize>[1] & { prefixes?: Record<string, string> },
 ) {
   const prefixes = options.prefixes ?? {};
   const stream = wrap(quads, { autoStart: false });
@@ -18,7 +18,7 @@ export function serializeToStream(
     stream.read = read;
     return stream.read();
   };
-  return rdfSerialize.serialize(stream, options);
+  return rdfSerializer.serialize(stream, options);
 }
 
 export default function serialize(...args: Parameters<typeof serializeToStream>) {
