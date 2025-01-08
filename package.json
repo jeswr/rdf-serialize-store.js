@@ -88,7 +88,7 @@
   },
   "dependencies": {
     "@jeswr/stream-to-string": "^1.0.0",
-    "@rdfjs/types": "^1.1.0",
+    "@rdfjs/types": "^2.0.0",
     "asynciterator": "^3.9.0",
     "rdf-serialize": "^4.0.1"
   }
